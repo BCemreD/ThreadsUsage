@@ -1,23 +1,29 @@
 package src.entity.concretes;
 
-import java.util.Random;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Order {
-	
-	private Random random = new Random();
+
+	private static final AtomicInteger nextId = new AtomicInteger(1);
 	private int orderId;
 	private int quantity;
-	private Product productName;
-	private Customer customerId;
+	private List<Product> products;
+	private Customer customer;
 	private String status;
-	
-	public Order(int orderId, int quantity, Product productName, Customer customerId, String status) {
-		super();
-		this.orderId = random.nextInt(10000)+1;
-		this.quantity = quantity;
-		this.productName = productName;
-		this.customerId = customerId;
-		this.status = status;
+
+	public Order(List<Product> products, Customer customer, String status) {
+        this.orderId = nextId.getAndIncrement();
+        this.products = products;
+        this.customer = customer;
+        this.quantity = products.size(); // Quantity is derived from product list
+        this.status = status;
+    }
+	public Order() {
+		
+	}
+	public Order(List<Product> productList, List<Customer> customers2, String status2) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getOrderId() {
@@ -32,20 +38,20 @@ public class Order {
 		this.quantity = quantity;
 	}
 
-	public Product getProductName() {
-		return productName;
+	public List<Product> getProducts() {
+		return products;
 	}
 
-	public void setProductName(Product productName) {
-		this.productName = productName;
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 
-	public Customer getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setCustomerId(Customer customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public String getStatus() {
@@ -55,5 +61,20 @@ public class Order {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
+	 @Override
+	    public String toString() {
+	        return "Order{" +
+	                "orderId=" + orderId +
+	                ", quantity=" + quantity +
+	                ", products=" + products +  // Ürün listesini de toString'e ekledim.
+	                ", customer=" + customer.getName() + " " + customer.getSurname() +
+	                ", status='" + status + '\'' +
+	                '}';
+	    }
+	 
+	 public List<Product> getAllProducts() {
+		    return products;
+		}
+
 }

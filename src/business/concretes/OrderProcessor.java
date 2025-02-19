@@ -16,7 +16,7 @@ public class OrderProcessor implements Runnable{
 	@Override
 	public void run() {
 		 System.out.println("Processing order: " + order.getOrderId() + " for customer: " + 
-		 order.getCustomerId().getName()+ order.getCustomerId().getSurname());
+		 order.getCustomer().getName()+ order.getCustomer().getSurname());
 		 
 		 try {
 			 Thread.sleep(2000);//simulation of waiting period

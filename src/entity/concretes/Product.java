@@ -1,10 +1,11 @@
 package src.entity.concretes;
 
-import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Product {
 	
-	private Random random = new Random();
+	private static final AtomicInteger nextId = new AtomicInteger(1); // Thread-safe ID generation
+	//Random() can harm thread concept, so we use AtomicInteger();
 	private final int id;
 	private String productName;
 	private double price;
@@ -13,11 +14,17 @@ public class Product {
 	
 	public Product(String productName, double price, int stockQuantity, String description) {
 		super();
-		this.id = random.nextInt(10000)+1;
+		this.id = nextId.getAndIncrement(); // Assign unique ID
 		this.productName = productName;
 		this.price = price;
 		this.stockQuantity = stockQuantity;
 		this.description = description;
+	}
+	
+	public Product(String productName) {
+		super ();
+		this.id = nextId.getAndIncrement(); // Assign unique ID
+		this.productName = productName;
 	}
 	
 	public int getId() {
@@ -51,13 +58,13 @@ public class Product {
 	
 	
 	@Override
-	public String toString() {
-	    return "Product{" +
-	    		"id=" + id +
-	            ", productName='" + productName + '\'' +
-	            ", price=" + price +
-	            ", stockQuantity=" + stockQuantity +
-	            ", description='" + description + '\'' +
-	            '}';
-	}
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", price=" + price +
+                ", stockQuantity=" + stockQuantity +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
